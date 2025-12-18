@@ -8,12 +8,11 @@ Select * from Production.ProductSubcategory
 
  
 Select 
-PC.Name as CategoryName, 
-PS.Name as SubcategoryName, 
-P.Name as ProductName
+    PC.Name as CategoryName, 
+    COUNT(DISTINCT P.ProductID) as ProductCount
 From Production.ProductCategory as PC
-Join Production.ProductSubcategory as PS
-    On PC.ProductCategoryID = PS.ProductCategoryID  
-Join Production.Product as P
-    On PS.ProductSubcategoryID = P.ProductSubcategoryID
-Order by CategoryName, SubcategoryName, ProductName  
+Inner Join Production.ProductSubcategory as PS ON PC.ProductCategoryID = PS.ProductCategoryID  
+Inner Join Production.Product as P ON PS.ProductSubcategoryID = P.ProductSubcategoryID
+GROUP BY PC.Name
+ORDER BY ProductCount DESC; 
+ 
